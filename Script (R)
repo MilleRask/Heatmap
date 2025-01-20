@@ -1,0 +1,32 @@
+# This script was generated during my Bachelor project 2023. 
+
+# load library
+library(ggplot2)
+library(pheatmap)
+library(RColorBrewer)
+
+# Set directory
+setwd("/Users/millesander/Library/CloudStorage/OneDrive-Personal/6. semester/Bachelor (20 etcs)/Samlet R/LPPgeomes+newC3T130")
+
+# Load Average Nucleotide Identity file (e.g. generated with Pyani)
+ANIb_coverage <- "ANIb_percentage_identity.tab"
+
+# Read table
+ANIbid <- read.table(ANIb_coverage)
+
+# Make specific species names bold (optional)
+name1 <- "C3_T13_0"
+name2 <- "A36a-5a"
+
+# Modify labels on rows (optional)
+rownames(ANIbid) <- ifelse(rownames(ANIbid) %in% c(name1, name2), 
+                           paste0("**", rownames(ANIbid), "**"), rownames(ANIbid))
+
+
+# Generating the heatmap with homemade color theme
+pheatmap(ANIbid, display_numbers = TRUE,main = "Average Nucleotide (ANIb) Identity Percentage", 
+         filename = "ANIb_identity_fromR.png",
+         color=colorRampPalette(c("dodgerblue3","steelblue2","deepskyblue","lightblue1","honeydew1","lemonchiffon2","khaki2","lightgoldenrod1","gold","darkgoldenrod1","lightsalmon1","salmon2","coral2"))(100),
+         fontsize=6,
+         fontsize_number=8)
+
